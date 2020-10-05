@@ -14,4 +14,3 @@ class ForisBackendAppConfig(AppConfig):
     def ready(self):
         """."""
         from django_backend_template.signals.student import create_student_report
-        from django_backend_template.signals.input_record import update_student_report
