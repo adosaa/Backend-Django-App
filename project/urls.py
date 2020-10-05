@@ -22,11 +22,11 @@ from rest_framework.documentation import include_docs_urls
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="ForisAI Backend",
+        title="django_backend_template Backend",
         default_version='v1',
-        description="Foris Admin APIs",
+        description="django_backend_template Admin APIs",
         terms_of_service="https://developer.asd.com/",
-        contact=openapi.Contact(email="adosaa@gmail.com"),
+        contact=openapi.Contact(email="[YOUR_EMAIl]"),
         license=openapi.License(name="BSD License"),
     ),
     public=True,
@@ -37,6 +37,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=None), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=None), name='schema-redoc'),
-    path('docs/', include_docs_urls(title='ForisAI Admin API', permission_classes=(AllowAny,))),
+    path('docs/', include_docs_urls(title='django_backend_template Admin API', permission_classes=(AllowAny,))),
     path('', include('apps.urls'))
 ]

@@ -1,0 +1,40 @@
+{
+    "development": {
+      "project_name": "django-backend-template",
+      "aws_region": "us-east-1",
+      "environment_variables": {
+            "ENV": "devel"
+      },
+      "exclude": [
+            "boto3*",
+            "botocore*"
+      ],
+      "django_settings": "project.settings.development",
+      "runtime": "python3.8",
+      "s3_bucket": "zappa-upload-dev-akiams8s",
+      "keep_warm": true,
+      "timeout_seconds": 900,
+      "slim_handler": false,
+      "memory_size": 3008,
+      "delete_local_zip": true
+    },
+    "staging": {
+      "project_name": "django-backend-template",
+      "aws_region": "us-east-1",
+      "environment_variables": {
+            "ENV": "staging"
+      },
+      "exclude": [
+            "boto3*",
+            "botocore*"
+      ],
+      "django_settings": "project.settings.staging",
+      "runtime": "python3.8",
+      "s3_bucket": "zappa-upload-stg-kasdm5ac",
+      "keep_warm": true,
+      "timeout_seconds": 900,
+      "slim_handler": false,
+      "memory_size": 3008,
+      "delete_local_zip": true
+    }
+}

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """Django's command-line utility for administrative tasks."""
 import os
+import json
 import sys
 
 if __name__ == "__main__":
@@ -10,6 +11,15 @@ if __name__ == "__main__":
     settings = os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings.' + environment)
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', settings)
     os.environ.setdefault("ENV", environment)
+
+    if environment == 'local':
+        os.environ.setdefault("ENV", environment)
+    else:
+        with open("zappa_settings.json") as zappa_settings_file:
+            data = json.load(zappa_settings_file)
+            zappa_variables = data[environment]['environment_variables']
+        for zappa_variable in zappa_variables:
+            os.environ.setdefault(zappa_variable, zappa_variables[zappa_variable])
 
     if 'test' in sys.argv:
         import coverage

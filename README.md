@@ -10,7 +10,7 @@ A good start point (from my humble opinion) to init a wherever kind of Backend p
   * The same with controllers, models, and views.
   * Setting by environment for an easy configuration.
   * Different mechanisms of deploy [Docker and ZAPPA (https://github.com/Miserlou/Zappa)] to use.
-* Basic authentication mechanism (for simplicity)
+* JWT authentication mechanism.
 * A little model (Student) as an example.
 * Swagger Doc (http://127.0.0.1:8000/swagger/)
 * ReDoc (http://127.0.0.1:8000/redoc/)
@@ -20,7 +20,7 @@ A good start point (from my humble opinion) to init a wherever kind of Backend p
 ## Setup
 1. Copy / clone repo from github.
 
-        git clone git@github.com:adosaa/django_backend_template.git
+        git clone https://github.com/adosaa/Backend-Django-App.git
 
 2. If you already have the repo, pull the latest version
 

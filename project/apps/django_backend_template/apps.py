@@ -7,11 +7,10 @@ from django.apps import AppConfig
 # =======================================
 
 
-class ForisBackendAppConfig(AppConfig):
+class DjangoBackendAppConfig(AppConfig):
     name = 'django_backend_template'
 
     # # If there are signals to be processed (for DB triggers, refer them here)
     def ready(self):
         """."""
         from django_backend_template.signals.student import create_student_report
-        from django_backend_template.signals.input_record import update_student_report
