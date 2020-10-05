@@ -7,7 +7,7 @@ from django.apps import AppConfig
 # =======================================
 
 
-class ForisBackendAppConfig(AppConfig):
+class DjangoBackendAppConfig(AppConfig):
     name = 'django_backend_template'
 
     # # If there are signals to be processed (for DB triggers, refer them here)
