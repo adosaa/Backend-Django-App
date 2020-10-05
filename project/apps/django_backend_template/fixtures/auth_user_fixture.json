@@ -1,0 +1,20 @@
+[
+{
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$180000$xvN7btMy6va3$Ho/xwx/C5zCXE++yGh94raj/KhGY8Jy1Go9YHSqB5R4=",
+        "last_login": "2020-08-29T19:49:48.854Z",
+        "is_superuser": true,
+        "username": "fvera",
+        "first_name": "Francisco",
+        "last_name": "vera",
+        "email": "fvera@gmail.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2020-08-29T19:49:48.854Z",
+        "groups": [],
+        "user_permissions": []
+    }
+}
+]
