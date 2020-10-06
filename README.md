@@ -1,3 +1,5 @@
+![Code Climate coverage](https://www.code-inspector.com/project/14447/score/svg) ![Code Climate coverage](https://www.code-inspector.com/project/14447/status/svg)
+
 # Django-backend-template
 A good start point (from my humble opinion) to init a wherever kind of Backend project in Django. This proof of concept includes:
 
