@@ -11,9 +11,9 @@ __email__ = "ariel@gmail.com"
 __copyright__ = "Copyright 2020"
 
 from rest_framework import status
+from importlib import import_module
 from abc import ABCMeta, abstractmethod
 from django_backend_template.utils.db_tools.transactional import wait_and_process_transaction
-from django_backend_template import errors
 
 
 class ControllerTemplate(metaclass=ABCMeta):
@@ -38,6 +38,7 @@ class ControllerTemplate(metaclass=ABCMeta):
         self.params = params
         self.instance_id = instance_id
         self.extra_fields = extra_fields
+        self.exception_path = "%s.errors.%s_error" % (self.model._meta.app_label, self.model.__name__.lower())
 
     @abstractmethod
     @wait_and_process_transaction(max_tries=2)
@@ -50,12 +51,11 @@ class ControllerTemplate(metaclass=ABCMeta):
         """
         try:
             serializer = self.serializer(data=self.params)
-            if serializer.is_valid():
-                return serializer.save()
+            if not serializer.is_valid():
+                exception_name = "%sBadRequest" % (self.model.__name__)
+                raise getattr(import_module(self.exception_path), exception_name)
             else:
-                exception_path = "errors.%s_error.%sBadRequest" % (self.model.__name__.lower(),
-                                                                   self.model.__name__)
-                raise eval(exception_path)
+                return serializer.save()
         except Exception as e:
             raise e
 
@@ -71,8 +71,8 @@ class ControllerTemplate(metaclass=ABCMeta):
         try:
             return self.model.objects.all()
         except Exception:
-            exception_path = "errors.%s_error.%sServerError" % (self.model.__name__.lower(), self.model.__name__)
-            raise eval(exception_path)
+            exception_name = "%sServerError" % (self.model.__name__)
+            raise getattr(import_module(self.exception_path), exception_name)
 
     @abstractmethod
     def get_object_with_params(self):
@@ -85,8 +85,8 @@ class ControllerTemplate(metaclass=ABCMeta):
         try:
             return self.model.objects.get(id=self.instance_id)
         except Exception:
-            exception_path = "errors.%s_error.%sNotFound" % (self.model.__name__.lower(), self.model.__name__)
-            raise eval(exception_path)
+            exception_name = "%sNotFound" % (self.model.__name__)
+            raise getattr(import_module(self.exception_path), exception_name)
 
     @abstractmethod
     @wait_and_process_transaction(max_tries=2)
@@ -100,11 +100,11 @@ class ControllerTemplate(metaclass=ABCMeta):
         try:
             model_instance = self.get_object_with_params()
             serializer = self.serializer(model_instance, data=self.params, partial=True)
-            if serializer.is_valid():
-                return serializer.save()
+            if not serializer.is_valid():
+                exception_name = "%sNotAccetable" % (self.model.__name__)
+                raise getattr(import_module(self.exception_path), exception_name)
             else:
-                exception_path = "errors.%s_error.%sBadRequest" % (self.model.__name__.lower(), self.model.__name__)
-                raise eval(exception_path)
+                return serializer.save()
         except Exception as e:
             raise e
 
@@ -121,5 +121,5 @@ class ControllerTemplate(metaclass=ABCMeta):
             self.get_object_with_params().delete()
             return status.HTTP_200_OK
         except Exception:
-            exception_path = "errors.%s_error.%sBadRequest" % (self.model.__name__.lower(), self.model.__name__)
-            raise eval(exception_path)
+            exception_name = "%sBadRequest" % (self.model.__name__)
+            raise getattr(import_module(self.exception_path), exception_name)
