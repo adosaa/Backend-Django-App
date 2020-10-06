@@ -38,7 +38,8 @@ class ControllerTemplate(metaclass=ABCMeta):
         self.params = params
         self.instance_id = instance_id
         self.extra_fields = extra_fields
-        self.exception_path = "%s.errors.%s_error" % (self.model._meta.app_label, self.model.__name__.lower())
+        self.exception_path = "%s.errors.%s_error" % (self.model._meta.app_label,
+                                                      self.model.__name__.lower())
 
     @abstractmethod
     @wait_and_process_transaction(max_tries=2)
@@ -54,8 +55,7 @@ class ControllerTemplate(metaclass=ABCMeta):
             if not serializer.is_valid():
                 exception_name = "%sBadRequest" % (self.model.__name__)
                 raise getattr(import_module(self.exception_path), exception_name)
-            else:
-                return serializer.save()
+            return serializer.save()
         except Exception as e:
             raise e
 
@@ -103,8 +103,7 @@ class ControllerTemplate(metaclass=ABCMeta):
             if not serializer.is_valid():
                 exception_name = "%sNotAccetable" % (self.model.__name__)
                 raise getattr(import_module(self.exception_path), exception_name)
-            else:
-                return serializer.save()
+            return serializer.save()
         except Exception as e:
             raise e
 
